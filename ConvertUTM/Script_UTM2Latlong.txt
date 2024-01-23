@@ -1,0 +1,87 @@
+f u n c t i o n   M e t e r s T o L a t L o n ( m x ,   m y , Z o n e )   { 
+ 
+         / / b a s e   o n   W G S 8 4 
+ 
+         V a r   Z E = 6 * Z o n e - 1 8 3 ; 
+ 
+         V a r   F i = ( m y ) / ( 6 3 6 6 1 9 7 . 7 2 4 * 0 . 9 9 9 6 ) ; 
+ 
+         V a r   N i = 0 . 9 9 9 6 * 6 3 9 9 5 9 3 . 6 2 6 / S Q R T ( 1 + ( 0 . 0 0 6 7 3 9 4 9 7 * C O S ( F i ) * C O S ( F i ) ) ) ; 
+ 
+         V a r   a = ( m x - 5 0 0 0 0 0 ) / N i ; 
+ 
+         V a r   A 1 = S I N ( 2 * F i ) ; 
+ 
+         V a r   A 2 = A 1 * P O W ( C O S ( F i ) , 2 ) ; 
+ 
+         V a r   J 2 = F i + ( A 1 / 2 ) ; 
+ 
+         V a r   J 4 = ( 3 * J 2 + A 2 ) / 4 ; 
+ 
+         V a r   J 6 = ( 5 * J 4 + A 2 * P O W ( C O S ( F i ) , 2 ) ) / 3 ; 
+ 
+         V a r   A l f a = 0 . 0 0 5 0 5 4 6 2 3 ; 
+ 
+         V a r   B e t a = ( 5 / 3 ) * P O W ( A l f a , 2 ) ; 
+ 
+         V a r   G a m m a = ( 3 5 / 2 7 ) * P O W ( A l f a , 3 ) ; 
+ 
+         V a r   B f i = 0 . 9 9 9 6 * 6 3 9 9 5 9 3 . 6 2 6 * ( F i - ( A l f a * J 2 ) + ( B e t a * J 4 ) - ( G a m m a * J 6 ) ) ; 
+ 
+         V a r   b = ( m y - B f i ) / N i ; 
+ 
+         V a r   Z e t a = ( ( 0 . 0 0 6 7 3 9 4 9 7 * P O W ( a , 2 ) ) / 2 ) * P O W ( C O S ( F i ) , 2 ) ; 
+ 
+         V a r   X i = a * ( 1 - ( Z e t a / 3 ) ) ; 
+ 
+         V a r   E t a = b * ( 1 - Z e t a ) + F i ; 
+ 
+         V a r   S e n = ( E X P ( X i ) - E X P ( - X i ) ) / 2 ; 
+ 
+         V a r   D L = A T A N ( S e n / C O S ( E t a ) ) ; 
+ 
+         V a r   T a u = A T A N ( C O S ( D L ) * T A N ( E t a ) ) ; 
+ 
+         V a r   F i e = F i + ( 1 + 0 . 0 0 6 7 3 9 4 9 7 * P O W ( C O S ( F i ) , 2 ) - ( 3 / 2 ) * 0 . 0 0 6 7 3 9 4 9 7 * S I N ( F i ) * C O S ( F i ) * ( T a u - F i ) ) * ( T a u - F i ) ; 
+ 
+         V a r   l a t = ( F i e / P I ) * 1 8 0 ; 
+ 
+         V a r   l o n g = ( D L / P I ) * 1 8 0 + Z E ; 
+ 
+         r e t u r n   [ l a t , l o n g ] ; 
+ 
+ } 
+ 
+ 
+ 
+ 
+ 
+ v a r   p o l y   =   G e o m e t r y ( $ f e a t u r e ) ; 
+ 
+ 
+ 
+ v a r   r e s u l t   =   " " ; 
+ 
+ i f   ( ! I s E m p t y ( p o l y ) )   { 
+ 
+         v a r   p n t _ c e n t r   =   C e n t r o i d ( p o l y ) ; 
+ 
+ 
+ 
+         v a r   l a t l o n   =   M e t e r s T o L a t L o n ( p n t _ c e n t r . x ,   p n t _ c e n t r . y , 4 8 ) ; 
+ 
+ 
+ 
+         / / r e s u l t   =   R o u n d ( l a t l o n [ 0 ] ,   6 )   +   " , "   +   R o u n d ( l a t l o n [ 1 ] ,   6 ) ; 
+ 
+         r e s u l t   =     l a t l o n [ 0 ] 
+ 
+ }   e l s e   { 
+ 
+         r e s u l t   =   0 ; 
+ 
+ } 
+ 
+ 
+ 
+ r e t u r n   r e s u l t ; 

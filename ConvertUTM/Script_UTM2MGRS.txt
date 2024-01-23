@@ -1,0 +1,215 @@
+f u n c t i o n   M e t e r s T o L a t L o n ( m x ,   m y , Z o n e )   { 
+ 
+         / / b a s e   o n   W G S 8 4 
+ 
+         V a r   Z E = 6 * Z o n e - 1 8 3 ; 
+ 
+         V a r   F i = ( m y ) / ( 6 3 6 6 1 9 7 . 7 2 4 * 0 . 9 9 9 6 ) ; 
+ 
+         V a r   N i = 0 . 9 9 9 6 * 6 3 9 9 5 9 3 . 6 2 6 / S Q R T ( 1 + ( 0 . 0 0 6 7 3 9 4 9 7 * C O S ( F i ) * C O S ( F i ) ) ) ; 
+ 
+         V a r   a = ( m x - 5 0 0 0 0 0 ) / N i ; 
+ 
+         V a r   A 1 = S I N ( 2 * F i ) ; 
+ 
+         V a r   A 2 = A 1 * P O W ( C O S ( F i ) , 2 ) ; 
+ 
+         V a r   J 2 = F i + ( A 1 / 2 ) ; 
+ 
+         V a r   J 4 = ( 3 * J 2 + A 2 ) / 4 ; 
+ 
+         V a r   J 6 = ( 5 * J 4 + A 2 * P O W ( C O S ( F i ) , 2 ) ) / 3 ; 
+ 
+         V a r   A l f a = 0 . 0 0 5 0 5 4 6 2 3 ; 
+ 
+         V a r   B e t a = ( 5 / 3 ) * P O W ( A l f a , 2 ) ; 
+ 
+         V a r   G a m m a = ( 3 5 / 2 7 ) * P O W ( A l f a , 3 ) ; 
+ 
+         V a r   B f i = 0 . 9 9 9 6 * 6 3 9 9 5 9 3 . 6 2 6 * ( F i - ( A l f a * J 2 ) + ( B e t a * J 4 ) - ( G a m m a * J 6 ) ) ; 
+ 
+         V a r   b = ( m y - B f i ) / N i ; 
+ 
+         V a r   Z e t a = ( ( 0 . 0 0 6 7 3 9 4 9 7 * P O W ( a , 2 ) ) / 2 ) * P O W ( C O S ( F i ) , 2 ) ; 
+ 
+         V a r   X i = a * ( 1 - ( Z e t a / 3 ) ) ; 
+ 
+         V a r   E t a = b * ( 1 - Z e t a ) + F i ; 
+ 
+         V a r   S e n = ( E X P ( X i ) - E X P ( - X i ) ) / 2 ; 
+ 
+         V a r   D L = A T A N ( S e n / C O S ( E t a ) ) ; 
+ 
+         V a r   T a u = A T A N ( C O S ( D L ) * T A N ( E t a ) ) ; 
+ 
+         V a r   F i e = F i + ( 1 + 0 . 0 0 6 7 3 9 4 9 7 * P O W ( C O S ( F i ) , 2 ) - ( 3 / 2 ) * 0 . 0 0 6 7 3 9 4 9 7 * S I N ( F i ) * C O S ( F i ) * ( T a u - F i ) ) * ( T a u - F i ) ; 
+ 
+         V a r   l a t = ( F i e / P I ) * 1 8 0 ; 
+ 
+         V a r   l o n g = ( D L / P I ) * 1 8 0 + Z E ; 
+ 
+         r e t u r n   [ l a t , l o n g ] ; 
+ 
+ } 
+ 
+ 
+ 
+ f u n c t i o n   p a d   ( v a l )   { 
+ 
+         i f   ( v a l   <   1 0 )   { 
+ 
+                 v a l   =   ' 0 0 0 0 '   +   v a l 
+ 
+         }   e l s e   i f   ( v a l   <   1 0 0 )   { 
+ 
+                 v a l   =   ' 0 0 0 '   +   v a l 
+ 
+         }   e l s e   i f   ( v a l   <   1 0 0 0 )   { 
+ 
+                 v a l   =   ' 0 0 '   +   v a l 
+ 
+         }   e l s e   i f   ( v a l   <   1 0 0 0 0 )   { 
+ 
+                 v a l   =   ' 0 '   +   v a l 
+ 
+         }   r e t u r n   v a l 
+ 
+ } 
+ 
+ 
+ 
+ f u n c t i o n   M G R S S t r i n g   ( L a t ,   L o n g )   { 
+ 
+         i f   ( L a t   <   - 8 0 )   r e t u r n   ' T o o   f a r   S o u t h ' ; 
+ 
+         i f   ( L a t   >   8 4 )   r e t u r n   ' T o o   f a r   N o r t h ' ; 
+ 
+         v a r   c   =   1   +   F l o o r ( ( L o n g + 1 8 0 ) / 6 ) ; 
+ 
+         v a r   e   =   c * 6   -   1 8 3   ; 
+ 
+         v a r   k   =   L a t * P I / 1 8 0 ; 
+ 
+         v a r   l   =   L o n g * P I / 1 8 0 ; 
+ 
+         v a r   m   =   e * P I / 1 8 0 ; 
+ 
+         v a r   n   =   C o s ( k ) ; 
+ 
+         v a r   o   =   0 . 0 0 6 7 3 9 4 9 6 8 1 9 9 3 6 0 6 2 * P o w ( n , 2 ) ; 
+ 
+         v a r   p   =   4 0 6 8 0 6 3 1 5 9 0 7 6 9 / ( 6 3 5 6 7 5 2 . 3 1 4 * S q r t ( 1   +   o ) ) ; 
+ 
+         v a r   q   =   T a n ( k ) ; 
+ 
+         v a r   r   =   q * q ; 
+ 
+         v a r   s   =   ( r * r * r )   -   P o w   ( q , 6 ) ; 
+ 
+         v a r   t   =   l   -   m ; 
+ 
+         v a r   u   =   1 . 0   -   r   +   o ; 
+ 
+         v a r   v   =   5 . 0   -   r   +   9 * o   +   4 . 0 * ( o * o ) ; 
+ 
+         v a r   w   =   5 . 0   -   1 8 . 0 * r   +   ( r * r )   +   1 4 . 0 * o   -   5 8 . 0 * r * o ; 
+ 
+         v a r   x   =   6 1 . 0   -   5 8 . 0 * r   +   ( r * r )   +   2 7 0 . 0 * o   -   3 3 0 . 0 * r * o ; 
+ 
+         v a r   y   =   6 1 . 0   -   4 7 9 . 0 * r   +   1 7 9 . 0 * ( r * r )   -   ( r * r * r ) ; 
+ 
+         v a r   z   =   1 3 8 5 . 0   -   3 1 1 1 . 0 * r   +   5 4 3 . 0 * ( r * r )   -   ( r * r * r ) ; 
+ 
+         v a r   a a   =   p * n * t   +   ( p / 6 . 0 * P o w   ( n , 3 ) * u * P o w   ( t , 3 ) )   +   ( p / 1 2 0 . 0 * P o w   ( n , 5 ) * w * P o w   ( t , 5 ) )   +   ( p / 5 0 4 0 . 0 * P o w   ( n , 7 ) * y * P o w   ( t , 7 ) ) ; 
+ 
+         v a r   a b   =   6 3 6 7 4 4 9 . 1 4 5 7 0 0 9 3 * ( k   -   ( 0 . 0 0 2 5 1 8 8 2 7 9 4 5 0 4 * S i n   ( 2 * k ) )   +   ( 0 . 0 0 0 0 0 2 6 4 3 5 4 1 1 2 * S i n   ( 4 * k ) )   -   ( 0 . 0 0 0 0 0 0 0 0 3 4 5 2 6 2 * S i n   ( 6 * k ) )   +   ( 0 . 0 0 0 0 0 0 0 0 0 0 0 4 8 9 2 * S i n   ( 8 * k ) ) )   +   ( q / 2 . 0 * p * P o w   ( n , 2 ) * P o w   ( t , 2 ) )   +   ( q / 2 4 . 0 * p * P o w   ( n , 4 ) * v * P o w   ( t , 4 ) )   +   ( q / 7 2 0 . 0 * p * P o w   ( n , 6 ) * x * P o w   ( t , 6 ) )   +   ( q / 4 0 3 2 0 . 0 * p * P o w   ( n , 8 ) * z * P o w   ( t , 8 ) ) ; 
+ 
+         a a   =   a a * 0 . 9 9 9 6   +   5 0 0 0 0 0 . 0 ; 
+ 
+         a b   =   a b * 0 . 9 9 9 6 ;   i f   ( a b   <   0 . 0 )   a b   + =   1 0 0 0 0 0 0 0 . 0 ; 
+ 
+         v a r   s p l i t 1   =   S p l i t ( ' C D E F G H J K L M N P Q R S T U V W X X ' ,   ' ' ) ; 
+ 
+         v a r   a d   =   s p l i t 1 [ F l o o r ( L a t / 8   +   1 0 ) ] ; 
+ 
+         v a r   a e   =   F l o o r   ( a a / 1 0 0 0 0 0 ) ; 
+ 
+         v a r   s p l i t 2   =   S p l i t ( ' A B C D E F G H ' ,   ' ' ) ; 
+ 
+         v a r   s p l i t 3   =   S p l i t ( ' J K L M N P Q R ' ,   ' ' ) ; 
+ 
+         v a r   s p l i t 4   =   S p l i t ( ' S T U V W X Y Z ' ,   ' ' ) ; 
+ 
+         v a r   c o m b i n e d S p l i t   =   [ s p l i t 2 ,   s p l i t 3 ,   s p l i t 4 ] ; 
+ 
+         v a r   a f   =   c o m b i n e d S p l i t [ ( c - 1 ) % 3 ] [ a e - 1 ] ; 
+ 
+         v a r   a g   =   F l o o r   ( a b / 1 0 0 0 0 0 ) % 2 0 ; 
+ 
+         v a r   s p l i t 5   =   S p l i t ( ' A B C D E F G H J K L M N P Q R S T U V ' ,   ' ' ) ; 
+ 
+         v a r   s p l i t 6   =   S p l i t ( ' F G H J K L M N P Q R S T U V A B C D E ' ,   ' ' ) ; 
+ 
+         v a r   c o m b i n e d S p l i t 2   =   [ s p l i t 5 ,   s p l i t 6 ] ; 
+ 
+         v a r   a h   =   c o m b i n e d S p l i t 2 [ ( c - 1 ) % 2 ] [ a g ] ; 
+ 
+         r e t u r n   [ F l o o r ( a a % 1 0 0 0 0 0 ) ,   F l o o r ( a b % 1 0 0 0 0 0 ) ,   c ,   a d ,   a f ,   a h ] 
+ 
+ } ; 
+ 
+ 
+ 
+ 
+ 
+ v a r   p o l y   =   G e o m e t r y ( $ f e a t u r e ) ; 
+ 
+ 
+ 
+ v a r   r e s u l t   =   0 ; 
+ 
+ v a r   x = 0 ; 
+ 
+ v a r   y = 0 ; 
+ 
+ i f   ( ! I s E m p t y ( p o l y ) )   { 
+ 
+         v a r   p n t _ c e n t r   =   C e n t r o i d ( p o l y ) ; 
+ 
+ 
+ 
+         v a r   l a t l o n   =   M e t e r s T o L a t L o n ( p n t _ c e n t r . x ,   p n t _ c e n t r . y , 4 8 ) ; 
+ 
+ 
+ 
+         / / r e s u l t   =   R o u n d ( l a t l o n [ 0 ] ,   6 )   +   " , "   +   R o u n d ( l a t l o n [ 1 ] ,   6 ) ; 
+ 
+         x = R o u n d ( l a t l o n [ 0 ] ,   6 ) ; 
+ 
+         y = R o u n d ( l a t l o n [ 1 ] ,   6 ) ; 
+ 
+ }   e l s e   { 
+ 
+         r e s u l t   =   0 ; 
+ 
+ } 
+ 
+ 
+ 
+ 
+ 
+ v a r   l a t   =   x ; 
+ 
+ v a r   l o n   =   y ; 
+ 
+ 
+ 
+ v a r   M G R S   =   M G R S S t r i n g ( l a t , l o n ) ; 
+ 
+ v a r   a a   =   p a d ( M G R S [ 0 ] ) ; 
+ 
+ v a r   a b   =   p a d ( M G R S [ 1 ] ) ; 
+ 
+ v a r   f o r m a t t e d   =   M G R S [ 2 ]   +   M G R S [ 3 ]   +   M G R S [ 4 ]   +   M G R S [ 5 ]   +   a a   +   a b ; 
+ 
+ r e t u r n   f o r m a t t e d ; 

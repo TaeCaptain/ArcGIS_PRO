@@ -1,0 +1,14 @@
+var regions = FeatureSetByName($datastore, 'ADMIN_LAW_A', ['AD_CODE'])
+
+var region = Intersects($feature, regions)
+
+var intersectedValues = [];
+
+for (var f in region) {
+    intersectedValues[Count(intersectedValues)] = f['AD_CODE'];
+}
+
+Sort(intersectedValues);
+
+var Value = IIF(Count(intersectedValues) > 2, intersectedValues[2], null);
+return Value;
